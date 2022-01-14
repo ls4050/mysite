@@ -1,7 +1,6 @@
 package com.poscoict.mysite.mvc.guestbook;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +11,25 @@ import com.poscoict.mysite.vo.GuestbookVo;
 import com.poscoict.web.mvc.Action;
 import com.poscoict.web.util.MvcUtil;
 
-public class IndexAction implements Action {
+public class AddAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//list dao 사용 
-		List<GuestbookVo> list = new GuestbookDao().findAll();
-		
-		request.setAttribute("list", list);
-		MvcUtil.forward("guestbook/index", request, response);
+		// TODO Auto-generated method stub
+		String name = request.getParameter("name");
+		String password = request.getParameter("pass");
+		String message = request.getParameter("message");
+		GuestbookVo vo = new GuestbookVo();
+		GuestbookDao dao = new GuestbookDao();
+
+		vo.setName(name);
+		vo.setPassword(password);
+		vo.setMessage(message);
+
+		if (dao.insert(vo)) {
+			MvcUtil.redirect("/mysite02/guestbook", request, response);
+		}
+
 	}
 
 }

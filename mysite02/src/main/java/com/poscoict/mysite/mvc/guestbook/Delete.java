@@ -1,26 +1,26 @@
 package com.poscoict.mysite.mvc.guestbook;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.poscoict.mysite.dao.GuestbookDao;
-import com.poscoict.mysite.vo.GuestbookVo;
 import com.poscoict.web.mvc.Action;
 import com.poscoict.web.util.MvcUtil;
 
-public class IndexAction implements Action {
+public class Delete implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//list dao 사용 
-		List<GuestbookVo> list = new GuestbookDao().findAll();
+		// TODO Auto-generated method stub
+		String no = request.getParameter("no");
+		String password = request.getParameter("password");
+		System.out.println(password);
+		new GuestbookDao().delete(no, password);
 		
-		request.setAttribute("list", list);
-		MvcUtil.forward("guestbook/index", request, response);
+		MvcUtil.redirect("/mysite02/guestbook", request, response);
 	}
 
 }
