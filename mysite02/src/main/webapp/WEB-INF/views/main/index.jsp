@@ -10,18 +10,7 @@
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>MySite</h1>
-			<ul>
-				<!-- 로그인을 하라는 말이 아니라 로그인화면을 보여달라는 뜻  -->
-				<li><a href="<%=request.getContextPath()%>/user?a=loginform">로그인</a><li>
-				<li><a href="<%=request.getContextPath()%>/user?a=joinform">회원가입</a><li>
-				<li><a href="<%=request.getContextPath()%>/user?a=updateform">회원정보수정</a><li>
-					<!-- 진짜 로그아웃 하르는 뜻  -->
-				<li><a href="<%=request.getContextPath()%>/user?a=logout">로그아웃</a><li>
-				<li>님 안녕하세요 ^^;</li>
-			</ul>
-		</div>
+		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
 		<div id="wrapper">
 			<div id="content">
 				<div id="site-introduction">
@@ -38,16 +27,8 @@
 				</div>
 			</div>
 		</div>
-		<div id="navigation">
-			<ul>
-				<li><a href="<%=request.getContextPath()%>">이원석</a></li>
-				<li><a href="<%=request.getContextPath()%>/guestbook">방명록</a></li>
-				<li><a href="<%=request.getContextPath()%>/board">게시판</a></li>
-			</ul>
-		</div>
-		<div id="footer">
-			<p>(c)opyright 2015, 2016, 2017, 2018</p>
-		</div>
+		<jsp:include page="/WEB-INF/views/includes/navigation.jsp"/>
+		<jsp:include page="/WEB-INF/views/includes/footer.jsp"/>
 	</div>
 </body>
 </html>
