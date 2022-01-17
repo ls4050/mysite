@@ -1,5 +1,9 @@
-<%@page import="java.util.List"%>
-<%@page import="com.poscoict.mysite.vo.GuestbookVo"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%pageContext.setAttribute("newline", "\n");%>
+
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,9 +13,9 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="<%=request.getContextPath() %>/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 </head>
-<%
-List<GuestbookVo> list = (List<GuestbookVo>)request.getAttribute("list");
-%>
+
+
+
 <body>
 	<div id="container">
 		<jsp:include page="/WEB-INF/views/includes/header.jsp"/>
@@ -47,7 +51,7 @@ List<GuestbookVo> list = (List<GuestbookVo>)request.getAttribute("list");
 							</tr>
 							<tr>
 								<td colspan=4>
-								<%=vo.getMessage().replaceAll("\n", "<br>") %>
+								${fn:replace(vo.message, newline, "<br/>")}
 								</td>
 							</tr>
 						</table>
