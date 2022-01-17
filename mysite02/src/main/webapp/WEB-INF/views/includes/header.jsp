@@ -5,7 +5,7 @@
 	<ul>
 		<li><a href="">로그인</a>
 		<li>
-		<li><a href="">회원가입</a>
+		<li><a href="<%=request.getContextPath() %>/user?a=joinform">회원가입</a>
 		<li>
 		<li><a href="">회원정보수정</a>
 		<li>
