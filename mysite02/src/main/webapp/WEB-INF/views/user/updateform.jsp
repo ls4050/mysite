@@ -30,8 +30,9 @@
 					
 					<fieldset>
 						<legend>성별</legend>
-						<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
-						<label>남</label> <input type="radio" name="gender" value="male">
+						<label>여</label>  <input type="radio"   name="gender" value="female"<c:if test= "${vo.gender eq 'female'}">checked</c:if>>
+						<label>남</label> <input type="radio" name="gender" value="male"<c:if test= "${vo.gender eq 'male'}">checked</c:if>>
+						  
 					</fieldset>
 					<input type="submit" value="수정하기">
 					
