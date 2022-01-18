@@ -17,22 +17,21 @@ public class BoardDao {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
-		conn = getConnection();
-			psmt = conn.prepareStatement("select b.no, b.title, b.hit, b.contents, b.reg_date, a.name \n"
-					+ " from user a, board b \n"
-					+ " where a.no = b.user_no \n"
-					+ " order by b.g_no desc, b.o_no asc;");
-		rs = psmt.executeQuery();
-		while(rs.next()) {
-			BoardVo vo = new BoardVo();
-			vo.setNo(rs.getLong(1));
-			vo.setTitle(rs.getString(2));
-			vo.setHit(rs.getInt(3));
-			vo.setContents(rs.getString(4));
-			vo.setRegDate(rs.getString(5));
-			vo.setUserName(rs.getString(6));
-			list.add(vo);
-		}
+			conn = getConnection();
+			psmt = conn.prepareStatement("select b.no, b.title, b.hit, b.contents, b.reg_date, a.name, a.no \n"
+					+ " from user a, board b \n" + " where a.no = b.user_no \n" + " order by b.g_no desc, b.o_no asc;");
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				BoardVo vo = new BoardVo();
+				vo.setNo(rs.getLong(1));
+				vo.setTitle(rs.getString(2));
+				vo.setHit(rs.getInt(3));
+				vo.setContents(rs.getString(4));
+				vo.setRegDate(rs.getString(5));
+				vo.setUserName(rs.getString(6));
+				vo.setUserNo(rs.getLong(7));
+				list.add(vo);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -52,21 +51,39 @@ public class BoardDao {
 		}
 		return list;
 	}
-	
-	
+
+	@SuppressWarnings("resource")
 	public boolean insert(BoardVo vo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
+
 		try {
-			conn = getConnection();
-			psmt = conn.prepareStatement("insert into board values (null, ? , ?, 0, ifnull((select max(g_no)+1 from board a),1), 1, 1, now(), ?);");
-			psmt.setString(1, vo.getTitle());
-			psmt.setString(2, vo.getContents());
-			psmt.setLong(3, vo.getUserNo());
-			
+			if (!vo.getGroupNo().equals(null)) {
+				conn = getConnection();
+				psmt = conn.prepareStatement("update board set o_no = o_no+1 where o_no > ? and g_no = ?;");
+				psmt.setInt(1, vo.getOrderNo());
+				psmt.setInt(2, vo.getGroupNo());
+				psmt.executeUpdate();
+				psmt = conn.prepareStatement("insert into board values(null, ?, ?, 0, ?, ?, ?, now(), ?);");
+				// no, title, contents, hit, g_no, o_no, depth, reg_date, user_no
+				psmt.setString(1, vo.getTitle());
+				psmt.setString(2, vo.getContents());
+				psmt.setInt(3, vo.getGroupNo());
+				psmt.setInt(4, vo.getOrderNo() + 1);
+				psmt.setInt(5, vo.getDepth() + 1);
+				psmt.setLong(6, vo.getUserNo());
+			} else {
+				conn = getConnection();
+				psmt = conn.prepareStatement(
+						"insert into board values (null, ? , ?, 0, ifnull((select max(g_no)+1 from board a),1), 1, 1, now(), ?);");
+				psmt.setString(1, vo.getTitle());
+				psmt.setString(2, vo.getContents());
+				psmt.setLong(3, vo.getUserNo());
+			}
+
 			int count = psmt.executeUpdate();
-			result = count==1;
+			result = count == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -83,7 +100,7 @@ public class BoardDao {
 		}
 		return result;
 	}
-	
+
 	public boolean delete(String no) {
 		boolean result = false;
 		Connection conn = null;
@@ -92,9 +109,9 @@ public class BoardDao {
 			conn = getConnection();
 			psmt = conn.prepareStatement("delete from board where no=?");
 			psmt.setString(1, no);
-			
+
 			int count = psmt.executeUpdate();
-			result = count==1;
+			result = count == 1;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -111,7 +128,103 @@ public class BoardDao {
 		}
 		return result;
 	}
-	
+
+	public BoardVo findByBno(String bno) {
+		BoardVo result = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		try {
+			conn = getConnection();
+
+			// 3. sql
+			psmt = conn.prepareStatement(
+					"select no, title, contents, hit, g_no, o_no, depth, reg_date, user_no from board where no = ?;");
+
+			// 4. binding
+			psmt.setString(1, bno);
+
+			// 5. sql execute
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				result = new BoardVo();
+				Long no = rs.getLong(1);
+				String title = rs.getString(2);
+				String contents = rs.getString(3);
+				int hit = rs.getInt(4);
+				int g_no = rs.getInt(5);
+				int o_no = rs.getInt(6);
+				int depth = rs.getInt(7);
+				String reg_date = rs.getString(8);
+				Long user_no = rs.getLong(9);
+
+				result = new BoardVo();
+				result.setNo(no);
+				result.setTitle(title);
+				result.setContents(contents);
+				result.setHit(hit);
+				result.setGroupNo(g_no);
+				result.setOrderNo(o_no);
+				result.setDepth(depth);
+				result.setRegDate(reg_date);
+				result.setUserNo(user_no);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+				if (psmt != null) {
+					psmt.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	public boolean update(String title, String contents, String no) {
+		boolean result = false;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement("update board set title =?, contents=? where no = ? ;");
+			psmt.setString(1, title);
+			psmt.setString(2, contents);
+			psmt.setString(3, no);
+			int count = psmt.executeUpdate();
+
+			result = count == 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+				if (psmt != null) {
+					psmt.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
 	private Connection getConnection() throws SQLException { // 자기가 처리해야하는 exception을 회피하는 것 위로 던지는 것임
 		Connection conn = null;
 		try {
