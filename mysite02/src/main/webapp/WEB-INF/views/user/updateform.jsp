@@ -37,7 +37,7 @@
 						<input type="radio" name="gender" value="male"
 							<c:if test= "${userVo.gender eq 'male'}">checked</c:if>>
 					</fieldset>
-
+					<input type="submit" value="수정하기">
 				</form>
 			</div>
 		</div>
