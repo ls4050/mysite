@@ -10,15 +10,19 @@ import javax.servlet.ServletResponse;
 
 
 public class EncodingFilter implements Filter {
+	private String encoding;
 	public void init(FilterConfig fConfig) throws ServletException {
-		
+		encoding = fConfig.getInitParameter("encoding");
+		if(encoding == null) { // default encoding
+			encoding = "UTF-8";
+		}
 	}
 
 
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		/* request */
-		request.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding(encoding);
 		
 		chain.doFilter(request, response);
 		
