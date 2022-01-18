@@ -31,18 +31,13 @@
 					<c:forEach items="${list }" var="vo" varStatus="status">
 						<tr>
 							<td>${count-status.index }</td>
-							<td  style="text-align:left"><a href="${pageContext.request.contextPath }/board?a=viewform">${vo.title }</a></td>
+							<td  style="text-align:left"><a href="${pageContext.request.contextPath }/board?a=viewform&bno=${vo.no}&uno=${vo.getUserNo()}">${vo.title }</a></td>
 							<td>${vo.getUserName() }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.getRegDate() }</td>
-							<c:choose>
-								<c:when test="${authUser.name==vo.getUserName() }">
+								<c:if test="${authUser.no==vo.getUserNo()&& not empty authUser}">
 									<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}" class="del" style="background-image:url('${pageContext.servletContext.contextPath }/assets/images/recycle.png')">삭제</a></td>
-								</c:when>
-								<c:otherwise>
-									
-								</c:otherwise>
-							</c:choose>
+								</c:if>
 						</tr>
 					</c:forEach>
 					<tr>
@@ -73,13 +68,11 @@
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
-				<c:choose>
-					<c:when test="${not empty authUser }">
+					<c:if test="${not empty authUser }">
 						<div class="bottom">
 							<a href="${pageContext.request.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
 						</div>				
-					</c:when>
-				</c:choose>
+					</c:if>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">
