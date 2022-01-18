@@ -16,6 +16,11 @@
 		<div id="content">
 			<div id="board">
 				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
+				<c:if test="${not empty rVo }">
+					<input type="hidden" name = "g_no" value="${rVo.getGroupNo() }"/>
+					<input type="hidden" name = "o_no" value="${rVo.getOrderNo() }"/>
+					<input type="hidden" name = "depth" value="${rVo.getDepth() }"/>
+				</c:if>
 					<input type = "hidden" name = "a" value="write">
 					<table class="tbl-ex">
 						<tr>
