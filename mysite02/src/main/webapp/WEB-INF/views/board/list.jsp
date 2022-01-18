@@ -10,6 +10,7 @@
 <link href="${pageContext.servletContext.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+	<c:set var="count" value="${fn:length(list) }"/>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
@@ -27,14 +28,23 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>				
-					<tr>
-						<td>3</td>
-						<td  style="text-align:left"><a href="">세 번째 글입니다.</a></td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-10-11 12:04:20</td>
-						<td><a href="" class="del" style="background-image:url('${pageContext.servletContext.contextPath }/assets/images/recycle.png')">삭제</a></td>
-					</tr>
+					<c:forEach items="${list }" var="vo" varStatus="status">
+						<tr>
+							<td>${count-status.index }</td>
+							<td  style="text-align:left"><a href="${pageContext.request.contextPath }/board?a=viewform">${vo.title }</a></td>
+							<td>${vo.getUserName() }</td>
+							<td>${vo.hit }</td>
+							<td>${vo.getRegDate() }</td>
+							<c:choose>
+								<c:when test="${authUser.name==vo.getUserName() }">
+									<td><a href="${pageContext.servletContext.contextPath }/board?a=delete&no=${vo.no}" class="del" style="background-image:url('${pageContext.servletContext.contextPath }/assets/images/recycle.png')">삭제</a></td>
+								</c:when>
+								<c:otherwise>
+									
+								</c:otherwise>
+							</c:choose>
+						</tr>
+					</c:forEach>
 					<tr>
 						<td>2</td>
 						<!-- style="padding-left:${(vo.depth-1)*20}px" -->
@@ -46,17 +56,7 @@
 						<td>안대혁</td>
 						<td>3</td>
 						<td>2015-10-02 12:04:12</td>
-						<td><a href="" class="del" style="background-image:url('${pageContext.servletContext.contextPath }/assets/images/recycle.png')">삭제</a></td>
-					</tr>
-					<tr>
-						<td>1</td>
-							<td style="text-align:left, padding-left:40px">
-							<img src="${pageContext.servletContext.contextPath }/assets/images/reply.png"/><a href="">첫 번째 글입니다.</a>
-						</td>
-						<td>안대혁</td>
-						<td>3</td>
-						<td>2015-09-25 07:24:32</td>
-						<td><a href="" class="del" style="background-image:url('${pageContext.servletContext.contextPath }/assets/images/recycle.png')">삭제</a></td>
+						<td><a href="${pageContext.servletContext.contextPath }/board?a=delete" class="del" style="background-image:url('${pageContext.servletContext.contextPath }/assets/images/recycle.png')">삭제</a></td>
 					</tr>
 				</table>
 				
@@ -73,10 +73,13 @@
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
-				
-				<div class="bottom">
-					<a href="" id="new-book">글쓰기</a>
-				</div>				
+				<c:choose>
+					<c:when test="${not empty authUser }">
+						<div class="bottom">
+							<a href="${pageContext.request.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+						</div>				
+					</c:when>
+				</c:choose>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">
