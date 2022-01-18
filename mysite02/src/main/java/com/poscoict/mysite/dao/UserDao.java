@@ -161,7 +161,7 @@ public class UserDao {
 
 		try {
 			conn = getConnection();
-			psmt = conn.prepareStatement("select name, email from user where no = ?;");
+			psmt = conn.prepareStatement("select name, email, gender from user where no = ?;");
 
 			psmt.setLong(1, no);
 
@@ -172,6 +172,7 @@ public class UserDao {
 
 				result.setName(rs.getString(1));
 				result.setEmail(rs.getString(2));
+				result.setGender(rs.getString(3));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
