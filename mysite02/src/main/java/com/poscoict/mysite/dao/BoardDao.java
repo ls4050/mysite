@@ -265,7 +265,7 @@ public class BoardDao {
 		return result;
 	}
 	
-	public boolean hitUp(Integer no) {
+	public boolean hitUp(Integer bno) {
 		boolean result = false;
 		Connection conn= null;
 		PreparedStatement psmt = null;
@@ -273,7 +273,7 @@ public class BoardDao {
 			conn = getConnection();
 			psmt = conn.prepareStatement("update board set hit=hit+1 where no = ?");
 			
-			psmt.setInt(1, no);
+			psmt.setInt(1, bno);
 			int count = psmt.executeUpdate();
 			result = count==1;
 			
