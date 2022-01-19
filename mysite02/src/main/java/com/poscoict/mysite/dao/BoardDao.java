@@ -18,7 +18,7 @@ public class BoardDao {
 		ResultSet rs = null;
 		try {
 			conn = getConnection();
-			psmt = conn.prepareStatement("select b.no, b.title, b.hit, b.contents, b.reg_date, a.name, a.no \n"
+			psmt = conn.prepareStatement("select b.no, b.title, b.hit, b.contents, b.reg_date, b.depth, a.name, a.no \n"
 					+ " from user a, board b \n" + " where a.no = b.user_no \n" + " order by b.g_no desc, b.o_no asc;");
 			rs = psmt.executeQuery();
 			while (rs.next()) {
@@ -28,8 +28,9 @@ public class BoardDao {
 				vo.setHit(rs.getInt(3));
 				vo.setContents(rs.getString(4));
 				vo.setRegDate(rs.getString(5));
-				vo.setUserName(rs.getString(6));
-				vo.setUserNo(rs.getLong(7));
+				vo.setDepth(rs.getInt(6));
+				vo.setUserName(rs.getString(7));
+				vo.setUserNo(rs.getLong(8));
 				list.add(vo);
 			}
 		} catch (SQLException e) {
