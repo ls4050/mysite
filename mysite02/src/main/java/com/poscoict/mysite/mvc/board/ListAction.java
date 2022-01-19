@@ -23,10 +23,12 @@ public class ListAction implements Action {
 		int startPage = 3;
 		int prePage = 2;
 		
+		
+		String kwd = request.getParameter("kwd");
 //		Map<K, V> m;
 //		m.put(response, m)
 		
-		List<BoardVo> list = new BoardDao().findAll();
+		List<BoardVo> list = new BoardDao().findAll(kwd);
 		request.setAttribute("list", list);
 		
 		MvcUtil.forward("board/list", request, response);

@@ -11,15 +11,18 @@ import java.util.List;
 import com.poscoict.mysite.vo.BoardVo;
 
 public class BoardDao {
-	public List<BoardVo> findAll() {
+	public List<BoardVo> findAll(String kwd) {
 		List<BoardVo> list = new ArrayList<BoardVo>();
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
+		if(kwd==null || kwd.equals("")) {
+			kwd = "";
+		}
 		try {
 			conn = getConnection();
 			psmt = conn.prepareStatement("select b.no, b.title, b.hit, b.contents, b.reg_date, b.depth, a.name, a.no \n"
-					+ " from user a, board b \n" + " where a.no = b.user_no \n" + " order by b.g_no desc, b.o_no asc;");
+					+ " from user a, board b \n" + " where a.no = b.user_no and title like '%"+kwd+"%'\n" + " order by b.g_no desc, b.o_no asc;");
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				BoardVo vo = new BoardVo();
