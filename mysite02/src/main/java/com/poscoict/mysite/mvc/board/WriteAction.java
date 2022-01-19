@@ -25,7 +25,7 @@ public class WriteAction implements Action {
 		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo) session.getAttribute("authUser");
 		BoardVo vo = new BoardVo();
-		if(!g_no.isBlank()) {
+		if(g_no!=null) {
 			//답글
 			vo.setGroupNo(Integer.parseInt(g_no));
 			vo.setOrderNo(Integer.parseInt(o_no));

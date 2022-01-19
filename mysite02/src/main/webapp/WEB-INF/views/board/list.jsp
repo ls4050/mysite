@@ -57,27 +57,28 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<li><a href="">◀</a></li>
-						<c:forEach begin="0" end="4" step="1" var="i">
+						<c:if test="${1 ne current }">
+							<li><a
+								href="${pageContext.servletContext.contextPath }/board?current=${current-1}">◀</a></li>
+						</c:if>
+						<c:set var="pageNum" value="${pageNum }" />
+						<c:forEach begin="1" end="${pageNum }" var="i">
 							<c:choose>
-								<c:when test="${i<=m.count}">
-									<c:choose>
-										<c:when test="${m.current == i }">
-											<li class="selected"><a
-												href="${pageContext.servletContext.contextPath }/board?current=${i}">${i+1}</a></li>
-										</c:when>
-										<c:otherwise>
-											<li><a
-												href="${pageContext.servletContext.contextPath }/board?current=${i}">${i+1}</a></li>
-										</c:otherwise>
-									</c:choose>
+								<c:when test="${i eq current}">
+									<li class="selected"><a
+										href="${pageContext.servletContext.contextPath }/board?current=${i}">${i}</a></li>
 								</c:when>
 								<c:otherwise>
-									<li>${i}</li>
+									<li><a
+										href="${pageContext.servletContext.contextPath }/board?current=${i}">${i}</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-						<li><a href="">▶</a></li>
+						<c:if test="${current ne pageNum}">
+							<li><a
+								href="${pageContext.servletContext.contextPath }/board?current=${current+1}">▶</a></li>
+						</c:if>
+
 					</ul>
 				</div>
 				<!-- pager 추가 -->

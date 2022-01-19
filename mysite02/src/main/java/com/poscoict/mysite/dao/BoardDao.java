@@ -11,7 +11,7 @@ import java.util.List;
 import com.poscoict.mysite.vo.BoardVo;
 
 public class BoardDao {
-	public List<BoardVo> findAll(String kwd, Integer page) {
+	public List<BoardVo> findAll(String kwd, Integer startNum, Integer splitNum) {
 		List<BoardVo> list = new ArrayList<BoardVo>();
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -24,7 +24,7 @@ public class BoardDao {
 //			psmt = conn.prepareStatement("select b.no, b.title, b.hit, b.contents, b.reg_date, b.depth, a.name, a.no \n"
 //					+ " from user a, board b \n" + " where a.no = b.user_no \n" + " order by b.g_no desc, b.o_no asc ;");
 			psmt = conn.prepareStatement("select b.no, b.title, b.hit, b.contents, b.reg_date, b.depth, a.name, a.no \n"
-					+ " from user a, board b \n" + " where a.no = b.user_no and title like '%"+kwd+"%'\n" + " order by b.g_no desc, b.o_no asc limit 5 offset "+page*5+";");
+					+ " from user a, board b \n" + " where a.no = b.user_no and title like '%"+kwd+"%'\n" + " order by b.g_no desc, b.o_no asc limit " + startNum + ", "+splitNum+";");
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				BoardVo vo = new BoardVo();
@@ -65,7 +65,7 @@ public class BoardDao {
 		PreparedStatement psmt = null;
 
 		try {
-			if (!vo.getGroupNo().equals(null)) {
+			if (vo.getGroupNo()!=null) {
 				conn = getConnection();
 				psmt = conn.prepareStatement("update board set o_no = o_no+1 where o_no > ? and g_no = ?;");
 				psmt.setInt(1, vo.getOrderNo());
@@ -198,7 +198,7 @@ public class BoardDao {
 		return result;
 	}
 
-	public Integer count() {
+	public Integer count(Integer n) {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -230,6 +230,14 @@ public class BoardDao {
 				e.printStackTrace();
 			}
 		}
+		
+		if(count%n>0) {
+			count = (count/n) +1;
+			
+		} else {
+			count = count / n;
+		}
+		
 		return count;
 	}
 	public boolean update(String title, String contents, String no) {

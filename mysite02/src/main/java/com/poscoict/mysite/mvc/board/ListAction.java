@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.poscoict.mysite.dao.BoardDao;
 import com.poscoict.mysite.vo.BoardVo;
@@ -19,27 +20,21 @@ public class ListAction implements Action {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BoardDao dao = new BoardDao();
-		Integer nextPage = -1; //nextpage가 없다는 것
-		Integer startPage = 3;
-		Integer prePage = 2;
-		
-		
+		Integer splitNum = 5; //nextpage가 없다는 것
+		Integer current = 1;
 		String kwd = request.getParameter("kwd");
-		Map<String, Integer> m = new HashMap<String, Integer>();
-		Integer count = dao.count();
-		Integer pageCount = count%5 == 0 ? count/5-1 : count/5;
+		HttpSession session = request.getSession();
 		
-		Integer current = 0;
-		if(request.getParameter("current")!=null) {
+		
+		if(request.getParameter("current") != null) {
 			current = Integer.parseInt(request.getParameter("current"));
 		}
 		
 		
-		m.put("count", pageCount);
-		m.put("current", current);
-		request.setAttribute("m", m);
+		session.setAttribute("pageNum", dao.count(splitNum));
+		session.setAttribute("current", current);
 		
-		List<BoardVo> list = new BoardDao().findAll(kwd, current); 
+		List<BoardVo> list = new BoardDao().findAll(kwd, (current-1)*splitNum, splitNum); 
 		request.setAttribute("list", list);
 		
 		MvcUtil.forward("board/list", request, response);
