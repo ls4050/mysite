@@ -265,6 +265,39 @@ public class BoardDao {
 		return result;
 	}
 	
+	public boolean hitUp(Integer no) {
+		boolean result = false;
+		Connection conn= null;
+		PreparedStatement psmt = null;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement("update board set hit=hit+1 where no = ?");
+			
+			psmt.setInt(1, no);
+			int count = psmt.executeUpdate();
+			result = count==1;
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+				if (psmt != null) {
+					psmt.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
 
 	private Connection getConnection() throws SQLException { // 자기가 처리해야하는 exception을 회피하는 것 위로 던지는 것임
 		Connection conn = null;
