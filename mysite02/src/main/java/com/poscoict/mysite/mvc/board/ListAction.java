@@ -1,7 +1,9 @@
 package com.poscoict.mysite.mvc.board;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,19 +18,28 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		int pageCount = 10;
-		int currenPage = 2;
-		int nextPage = -1; //nextpage가 없다는 것
-		int startPage = 3;
-		int prePage = 2;
+		BoardDao dao = new BoardDao();
+		Integer nextPage = -1; //nextpage가 없다는 것
+		Integer startPage = 3;
+		Integer prePage = 2;
 		
 		
 		String kwd = request.getParameter("kwd");
-//		Map<K, V> m;
-//		m.put(response, m)
+		Map<String, Integer> m = new HashMap<String, Integer>();
+		Integer count = dao.count();
+		Integer pageCount = count%5 == 0 ? count/5-1 : count/5;
 		
-		List<BoardVo> list = new BoardDao().findAll(kwd);
+		Integer current = 0;
+		if(request.getParameter("current")!=null) {
+			current = Integer.parseInt(request.getParameter("current"));
+		}
+		
+		
+		m.put("count", pageCount);
+		m.put("current", current);
+		request.setAttribute("m", m);
+		
+		List<BoardVo> list = new BoardDao().findAll(kwd, current); 
 		request.setAttribute("list", list);
 		
 		MvcUtil.forward("board/list", request, response);

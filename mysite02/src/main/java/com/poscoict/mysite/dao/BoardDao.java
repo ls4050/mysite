@@ -11,7 +11,7 @@ import java.util.List;
 import com.poscoict.mysite.vo.BoardVo;
 
 public class BoardDao {
-	public List<BoardVo> findAll(String kwd) {
+	public List<BoardVo> findAll(String kwd, Integer page) {
 		List<BoardVo> list = new ArrayList<BoardVo>();
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -21,8 +21,10 @@ public class BoardDao {
 		}
 		try {
 			conn = getConnection();
+//			psmt = conn.prepareStatement("select b.no, b.title, b.hit, b.contents, b.reg_date, b.depth, a.name, a.no \n"
+//					+ " from user a, board b \n" + " where a.no = b.user_no \n" + " order by b.g_no desc, b.o_no asc ;");
 			psmt = conn.prepareStatement("select b.no, b.title, b.hit, b.contents, b.reg_date, b.depth, a.name, a.no \n"
-					+ " from user a, board b \n" + " where a.no = b.user_no and title like '%"+kwd+"%'\n" + " order by b.g_no desc, b.o_no asc;");
+					+ " from user a, board b \n" + " where a.no = b.user_no and title like '%"+kwd+"%'\n" + " order by b.g_no desc, b.o_no asc limit 5 offset "+page*5+";");
 			rs = psmt.executeQuery();
 			while (rs.next()) {
 				BoardVo vo = new BoardVo();
@@ -196,6 +198,40 @@ public class BoardDao {
 		return result;
 	}
 
+	public Integer count() {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		Integer count = 0;
+		try {
+			conn = getConnection();
+			psmt = conn.prepareStatement("select count(*) from board;");
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+				if (psmt != null) {
+					psmt.close();
+				}
+				if (rs != null) {
+					rs.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
 	public boolean update(String title, String contents, String no) {
 		boolean result = false;
 		Connection conn = null;
@@ -228,6 +264,7 @@ public class BoardDao {
 
 		return result;
 	}
+	
 
 	private Connection getConnection() throws SQLException { // 자기가 처리해야하는 exception을 회피하는 것 위로 던지는 것임
 		Connection conn = null;
