@@ -198,14 +198,14 @@ public class BoardDao {
 		return result;
 	}
 
-	public Integer count(Integer n) {
+	public Integer getTotalRows() {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		Integer count = 0;
 		try {
 			conn = getConnection();
-			psmt = conn.prepareStatement("select count(*) from board;");
+			psmt = conn.prepareStatement("select count(no) from board;");
 			rs = psmt.executeQuery();
 			if(rs.next()) {
 				count = rs.getInt(1);
@@ -229,13 +229,6 @@ public class BoardDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		
-		if(count%n>0) {
-			count = (count/n) +1;
-			
-		} else {
-			count = count / n;
 		}
 		
 		return count;

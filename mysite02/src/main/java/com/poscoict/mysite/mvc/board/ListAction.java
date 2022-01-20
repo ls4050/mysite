@@ -19,24 +19,46 @@ public class ListAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BoardDao dao = new BoardDao();
-		Integer splitNum = 5; //nextpage가 없다는 것
-		Integer current = 1;
-		String kwd = request.getParameter("kwd");
-		HttpSession session = request.getSession();
-		
-		
-		if(request.getParameter("current") != null) {
-			current = Integer.parseInt(request.getParameter("current"));
+		Integer cPage = 0;
+		String tempPage = request.getParameter("page");
+		if(tempPage ==null||tempPage.length()==0) {
+			cPage=1;
+		}
+		try {
+			cPage = Integer.parseInt(tempPage);
+		} catch (NumberFormatException e) {
+			// TODO: handle exception
+			cPage = 1;
 		}
 		
+		String kwd = request.getParameter("kwd");
+		BoardDao dao = new BoardDao();
+		Integer splitNum = 5; // 한 페이지에 들어가는 데이터 개수
+		Integer pageLength = 5; // 한 블럭에 들어가는 페이지 개수
+		Integer totalRows = dao.getTotalRows(); // 총 데이터 수
+		Integer cPageBlock = (cPage % pageLength == 0) ? cPage / pageLength : (cPage / pageLength) + 1; // 현재 페이지 블록 
+		Integer totalPages = totalRows%splitNum == 0 ? totalRows/splitNum : (totalRows/splitNum)+1; // 총 페이지 수 
+		Integer startPage = 1+(cPageBlock-1)*pageLength;
+		Integer endPage = startPage+pageLength-1;
+		Integer start = (cPage-1)*splitNum;
+		HttpSession session = request.getSession();
 		
-		session.setAttribute("pageNum", dao.count(splitNum));
-		session.setAttribute("current", current);
+		if(totalPages == 0) {
+			totalPages =1;
+		}
+		if(cPage>totalPages) {
+			cPage = 1;
+		}
+
 		
-		List<BoardVo> list = new BoardDao().findAll(kwd, (current-1)*splitNum, splitNum); 
+		request.setAttribute("totalPages", totalPages);
+		request.setAttribute("startPage", startPage);
+		request.setAttribute("endPage", endPage);
+		request.setAttribute("cPage", cPage);
+
+		List<BoardVo> list = new BoardDao().findAll(kwd, start, splitNum);
 		request.setAttribute("list", list);
-		
+
 		MvcUtil.forward("board/list", request, response);
 	}
 

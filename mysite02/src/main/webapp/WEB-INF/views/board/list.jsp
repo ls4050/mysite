@@ -3,6 +3,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+int startP = (int) session.getAttribute("startPage");
+%>
+<%
+int endP = (int) session.getAttribute("endPage");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,27 +63,47 @@
 				<!-- pager 추가 -->
 				<div class="pager">
 					<ul>
-						<c:if test="${1 ne current }">
-							<li><a
-								href="${pageContext.servletContext.contextPath }/board?current=${current-1}">◀</a></li>
-						</c:if>
-						<c:set var="pageNum" value="${pageNum }" />
-						<c:forEach begin="1" end="${pageNum }" var="i">
+						<c:choose>
+							<c:when test="${cPage eq 1}">
+								<li><a href="#">◀</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a
+									href="${pageContext.servletContext.contextPath }/board?page=${cPage-1}">◀</a></li>
+							</c:otherwise>
+						</c:choose>
+
+
+						<c:forEach begin="0" end="4" var="i">
 							<c:choose>
-								<c:when test="${i eq current}">
-									<li class="selected"><a
-										href="${pageContext.servletContext.contextPath }/board?current=${i}">${i}</a></li>
+								<c:when test="${totalPages >= startPage+i}">
+									<c:choose>
+										<c:when test="${startPage+i eq cPage}">
+											<li class="selected"><a
+												href="${pageContext.servletContext.contextPath }/board?page=${startPage+i}">${startPage+i}</a></li>
+										</c:when>
+										<c:otherwise>
+											<li><a
+												href="${pageContext.servletContext.contextPath }/board?page=${startPage+i}">${startPage+i}</a></li>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
-									<li><a
-										href="${pageContext.servletContext.contextPath }/board?current=${i}">${i}</a></li>
+									<li>${startPage+i}</li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
-						<c:if test="${current ne pageNum}">
-							<li><a
-								href="${pageContext.servletContext.contextPath }/board?current=${current+1}">▶</a></li>
-						</c:if>
+
+
+						<c:choose>
+							<c:when test="${totalPages eq cPage}">
+								<li><a href="#">▶</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a
+									href="${pageContext.servletContext.contextPath }/board?page=${cPage+1}">▶</a></li>
+							</c:otherwise>
+						</c:choose>
 
 					</ul>
 				</div>
