@@ -20,7 +20,7 @@ public class UpdateAction implements Action {
 		String bno = request.getParameter("bno");
 		String uno = request.getParameter("uno");
 		if(new BoardDao().update(title, contents, bno)) {
-			MvcUtil.redirect(request.getContextPath()+"/board", request, response);
+			MvcUtil.redirect(request.getContextPath()+"/board?a=viewform&"+"bno="+bno+"&uno="+uno, request, response);
 		}
 		
 	}
