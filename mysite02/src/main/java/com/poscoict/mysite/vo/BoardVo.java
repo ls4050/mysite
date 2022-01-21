@@ -11,12 +11,19 @@ public class BoardVo {
 	private String regDate;
 	private Long userNo;
 	private String userName;
+	private Integer totalCount;
 	
 	@Override
 	public String toString() {
 		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", groupNo="
 				+ groupNo + ", orderNo=" + orderNo + ", depth=" + depth + ", regDate=" + regDate + ", userNo=" + userNo
 				+ ", userName=" + userName + "]";
+	}
+	public Integer gettotalCount() {
+		return totalCount;
+	}
+	public void settotalCount(Integer totalCount) {
+		this.totalCount = totalCount;
 	}
 	public Long getNo() {
 		return no;
