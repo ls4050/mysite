@@ -197,15 +197,15 @@ public class BoardDao {
 
 		return result;
 	}
-
-	public Integer getTotalRows() {
+	
+	public Integer getTotalRows(String kwd) {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		Integer count = 0;
 		try {
 			conn = getConnection();
-			psmt = conn.prepareStatement("select count(no) from board;");
+			psmt = conn.prepareStatement("select count(no) from board where title like '%"+kwd+"%';");
 			rs = psmt.executeQuery();
 			if(rs.next()) {
 				count = rs.getInt(1);

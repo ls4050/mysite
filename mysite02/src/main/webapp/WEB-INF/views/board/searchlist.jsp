@@ -72,7 +72,7 @@
 							</c:when>
 							<c:otherwise>
 								<li><a
-									href="${pageContext.servletContext.contextPath }/board?page=${cPage-1}&kwd=${kwd}">◀</a></li>
+									href="${pageContext.servletContext.contextPath }/board?page=${cPage-1}">◀</a></li>
 							</c:otherwise>
 						</c:choose>
 
@@ -82,11 +82,11 @@
 									<c:choose>
 										<c:when test="${startPage+i eq cPage}">
 											<li class="selected"><a
-												href="${pageContext.servletContext.contextPath }/board?page=${startPage+i}&kwd=${kwd}">${startPage+i}</a></li>
+												href="${pageContext.servletContext.contextPath }/board?page=${startPage+i}">${startPage+i}</a></li>
 										</c:when>
 										<c:otherwise>
 											<li><a
-												href="${pageContext.servletContext.contextPath }/board?page=${startPage+i}&kwd=${kwd}">${startPage+i}</a></li>
+												href="${pageContext.servletContext.contextPath }/board?page=${startPage+i}">${startPage+i}</a></li>
 										</c:otherwise>
 									</c:choose>
 								</c:when>
@@ -103,7 +103,7 @@
 							</c:when>
 							<c:otherwise>
 								<li><a
-									href="${pageContext.servletContext.contextPath }/board?page=${cPage+1}&kwd=${kwd}">▶</a></li>
+									href="${pageContext.servletContext.contextPath }/board?page=${cPage+1}">▶</a></li>
 							</c:otherwise>
 						</c:choose>
 

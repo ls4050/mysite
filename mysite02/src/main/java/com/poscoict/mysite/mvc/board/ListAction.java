@@ -34,14 +34,15 @@ public class ListAction implements Action {
 		Integer splitNum = 5; // 한 페이지에 들어가는 데이터 개수
 		Integer start = (cPage - 1) * splitNum;
 		String limit = "limit " + start + ", " + splitNum + ";";
-		if (kwd != null) {
-			limit = "";
+		if (kwd == null) {
+			kwd="";
 		}
+		System.out.println(kwd);
 		List<BoardVo> list = new BoardDao().findAll(kwd, limit);
 
 		BoardDao dao = new BoardDao();
 		Integer pageLength = 5; // 한 블럭에 들어가는 페이지 개수
-		Integer totalRows = dao.getTotalRows(); // 총 데이터 수
+		Integer totalRows = dao.getTotalRows(kwd); // 총 데이터 수
 		Integer cPageBlock = (cPage % pageLength == 0) ? cPage / pageLength : (cPage / pageLength) + 1; // 현재 페이지 블록
 		Integer totalPages = totalRows % splitNum == 0 ? totalRows / splitNum : (totalRows / splitNum) + 1; // 총 페이지 수
 		Integer startPage = 1 + (cPageBlock - 1) * pageLength;
@@ -60,9 +61,9 @@ public class ListAction implements Action {
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("cPage", cPage);
-
+		request.setAttribute("kwd", kwd);
 		request.setAttribute("list", list);
-
+		
 		MvcUtil.forward("board/list", request, response);
 	}
 
