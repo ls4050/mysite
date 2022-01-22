@@ -37,7 +37,6 @@ public class ListAction implements Action {
 		if (kwd == null) {
 			kwd="";
 		}
-		System.out.println(kwd);
 		List<BoardVo> list = new BoardDao().findAll(kwd, limit);
 
 		BoardDao dao = new BoardDao();

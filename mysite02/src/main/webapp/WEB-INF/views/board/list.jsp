@@ -60,10 +60,6 @@
 					</c:forEach>
 				</table>
 				<!-- pager 추가 -->
-						<h4>statrPage${startPage }</h4>
-						<h4>cPage${cPage }</h4>
-						<h4>endPage${endPage }</h4>
-						<h4>totalRows${totalRows}</h4>
 				<div class="pager">
 					<ul>
 						<c:choose>
