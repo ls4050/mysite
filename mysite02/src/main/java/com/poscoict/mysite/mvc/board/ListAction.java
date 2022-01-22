@@ -54,7 +54,8 @@ public class ListAction implements Action {
 		if (cPage > totalPages) {
 			cPage = 1;
 		}
-
+		
+		request.setAttribute("totalRows", totalRows);
 		request.setAttribute("totalPages", totalPages);
 		request.setAttribute("startPage", startPage);
 		request.setAttribute("endPage", endPage);

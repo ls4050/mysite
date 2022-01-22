@@ -14,7 +14,7 @@
 	rel="stylesheet" type="text/css">
 </head>
 <body>
-	<c:set var="count" value="${fn:length(list) }" />
+	
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
@@ -33,9 +33,14 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
+					<c:forEach begin="0" end="">
+						<c:set var="count" value="${totalRows=totalRows-1 }"/>
+					</c:forEach>
+					<c:set var="num" value="${totalRows - ((cPage-1) * 5) }"/>
 					<c:forEach items="${list }" var="vo" varStatus="status">
 						<tr>
-							<td>${count-status.index }</td>
+							
+							<td>${num-status.index}</td>
 							<td style="text-align:left; padding-left:${(vo.depth-1)*20}px">
 								<c:if test="${vo.depth>=2 }">
 									<img
@@ -56,6 +61,10 @@
 					</c:forEach>
 				</table>
 				<!-- pager 추가 -->
+						<h4>statrPage${startPage }</h4>
+						<h4>cPage${cPage }</h4>
+						<h4>endPage${endPage }</h4>
+						<h4>totalRows${totalRows}</h4>
 				<div class="pager">
 					<ul>
 						<c:choose>
@@ -67,7 +76,6 @@
 									href="${pageContext.servletContext.contextPath }/board?page=${cPage-1}">◀</a></li>
 							</c:otherwise>
 						</c:choose>
-
 
 						<c:forEach begin="0" end="4" var="i">
 							<c:choose>
