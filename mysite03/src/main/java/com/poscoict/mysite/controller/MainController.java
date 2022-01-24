@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
 	@RequestMapping({"", "/main"})
 	public String index() {
-		return "/WEB-INF/views/main/index.jsp";
+//		return "/WEB-INF/views/main/index.jsp";
+		return "main/index";
 	}
 }
