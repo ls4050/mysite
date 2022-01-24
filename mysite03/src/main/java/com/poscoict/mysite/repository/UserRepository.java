@@ -52,23 +52,23 @@ public class UserRepository {
 		return result;
 	}
 	
-	public boolean update(String name, String password,String gender, Long no) {
+	public boolean update(UserVo userVo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
 			conn = getConnection();
-			if(password.isBlank()) {
+			if(userVo.getPassword().isBlank()) {
 				psmt = conn.prepareStatement("update user set name=?, gender=? where no = ?;");
-				psmt.setString(1, name);
-				psmt.setString(2, gender);
-				psmt.setLong(3, no);
+				psmt.setString(1, userVo.getName());
+				psmt.setString(2, userVo.getGender());
+				psmt.setLong(3, userVo.getNo());
 			} else {
 				psmt = conn.prepareStatement("update user set name=?, gender=?, password=? where no = ?;");
-				psmt.setString(1, name);
-				psmt.setString(2, gender);
-				psmt.setString(3, password);
-				psmt.setLong(4, no);
+				psmt.setString(1, userVo.getName());
+				psmt.setString(2, userVo.getGender());
+				psmt.setString(3, userVo.getPassword());
+				psmt.setLong(4, userVo.getNo());
 			}
 			int count = psmt.executeUpdate();
 			
