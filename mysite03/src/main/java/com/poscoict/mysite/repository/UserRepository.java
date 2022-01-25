@@ -1,11 +1,14 @@
 package com.poscoict.mysite.repository;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.poscoict.mysite.exception.UserRepositoryException;
@@ -13,12 +16,18 @@ import com.poscoict.mysite.vo.UserVo;
 
 @Repository
 public class UserRepository {
+	@Autowired
+	private DataSource dataSource;
+	
+	@Autowired
+	private SqlSession sqlSession;
+	
 	public boolean insert(UserVo vo) {
 		boolean result = false;
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			// 3. sql
 			psmt = conn.prepareStatement("insert into user values(null, ?, ?, ?, ?, now());");
@@ -58,7 +67,7 @@ public class UserRepository {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			if(userVo.getPassword().isBlank()) {
 				psmt = conn.prepareStatement("update user set name=?, gender=? where no = ?;");
 				psmt.setString(1, userVo.getName());
@@ -100,10 +109,10 @@ public class UserRepository {
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 
 			// 3. sql
-			psmt = conn.prepareStatement("elect no, name from user where email = ? and password = ?;");
+			psmt = conn.prepareStatement("select no, name from user where email = ? and password = ?;");
 
 			// 4. binding
 			psmt.setString(1, email);
@@ -141,22 +150,6 @@ public class UserRepository {
 		return result;
 	}
 
-	private Connection getConnection() throws SQLException { // 자기가 처리해야하는 exception을 회피하는 것 위로 던지는 것임
-		Connection conn = null;
-		try {
-			// 1. JDBC 드라이버 로딩
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-			// 2. 연결하기
-			String url = "jdbc:mysql://localhost:3306/webdb?characterEncoding=UTF-8&serverTimezone=UTC";
-			conn = DriverManager.getConnection(url, "webdb", "webdb");
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패 : " + e);
-		}
-
-		return conn;
-	}
-
 	public UserVo findByNo(Long no) {
 		UserVo result = null;
 		Connection conn = null;
@@ -164,7 +157,7 @@ public class UserRepository {
 		ResultSet rs = null;
 
 		try {
-			conn = getConnection();
+			conn = dataSource.getConnection();
 			psmt = conn.prepareStatement("select name, email, gender from user where no = ?;");
 
 			psmt.setLong(1, no);
