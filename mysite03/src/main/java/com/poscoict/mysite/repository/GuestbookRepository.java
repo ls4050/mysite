@@ -1,8 +1,5 @@
 package com.poscoict.mysite.repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +16,6 @@ public class GuestbookRepository {
 	@Autowired
 	private SqlSession sqlSession;
 
-	Connection conn = null;
-	PreparedStatement psmt = null;
-	ResultSet rs = null;
 	public List<GuestbookVo> findAll() {
 		return sqlSession.selectList("guestbook.findAll");
 	}
