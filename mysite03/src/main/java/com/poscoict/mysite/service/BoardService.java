@@ -44,7 +44,7 @@ public class BoardService {
 		}
 		Integer splitNum = 5; // 한 페이지에 들어가는 데이터 개수
 		Integer start = (currentPage - 1) * splitNum;
-		String limit = "limit " + start + ", " + splitNum + ";";
+		String limit = "limit " + start + ", " + splitNum;
 		if (keyword == null) {
 			keyword="";
 		}
