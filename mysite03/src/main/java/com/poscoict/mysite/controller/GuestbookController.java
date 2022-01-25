@@ -28,8 +28,10 @@ public class GuestbookController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String login(GuestbookVo vo) {
+	public String add(GuestbookVo vo) {
+		System.out.println("guestbookvo:"+vo.getNo());
 		guestbookService.addMessage(vo);
+		System.out.println("guestbookvo:"+vo.getNo());
 		return "redirect:/guestbook";
 	}
 
