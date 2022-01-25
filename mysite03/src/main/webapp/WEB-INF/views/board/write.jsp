@@ -15,13 +15,13 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp"/>
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
-				<c:if test="${not empty rVo }">
-					<input type="hidden" name = "g_no" value="${rVo.getGroupNo() }"/>
-					<input type="hidden" name = "o_no" value="${rVo.getOrderNo() }"/>
-					<input type="hidden" name = "depth" value="${rVo.getDepth() }"/>
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/write">
+				<input type="hidden" name="userNo" value="${authUser.no}" />
+				<c:if test="${not empty vo.groupNo }">
+					<input type="hidden" name = "groupNo" value="${vo.groupNo }"/>
+					<input type="hidden" name = "orderNo" value="${vo.orderNo }"/>
+					<input type="hidden" name = "depth" value="${vo.depth }"/>
 				</c:if>
-					<input type = "hidden" name = "a" value="write">
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
@@ -33,12 +33,12 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content"></textarea>
+								<textarea id="content" name="contents"></textarea>
 							</td>
 						</tr>
 					</table>
 					<div class="bottom">
-						<a href="${pageContext.servletContext.contextPath }/board">취소</a>
+						<a href="${header.referer }">취소</a>
 						<input type="submit" value="등록">
 					</div>
 				</form>				
