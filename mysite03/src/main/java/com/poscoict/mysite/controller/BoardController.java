@@ -54,10 +54,8 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/update/{no}", method = RequestMethod.GET)
-	public String update(@PathVariable("no") Long no, Integer page, String keyword, Model model) {
+	public String update(@PathVariable("no") Long no, Model model) {
 		model.addAttribute("vo", boardService.getContents(no));
-		model.addAttribute("page", page);
-		model.addAttribute("keyword", keyword);
 		return "board/update";
 	}
 
