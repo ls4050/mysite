@@ -24,8 +24,6 @@ public class UserService {
 	}
 
 	public void updateUser(UserVo userVo) {
-		System.out.println(userVo);
 		userRepository.update(userVo);
-		System.out.println(userVo);
 	}
 }

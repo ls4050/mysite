@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
+import com.poscoict.mysite.exception.UserRepositoryException;
 import com.poscoict.mysite.vo.UserVo;
 
 @Repository
@@ -93,7 +94,7 @@ public class UserRepository {
 		return result;
 	}
 
-	public UserVo findByEmailAndPassword(String email, String password) {
+	public UserVo findByEmailAndPassword(String email, String password) throws UserRepositoryException {
 		UserVo result = null;
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -102,7 +103,7 @@ public class UserRepository {
 			conn = getConnection();
 
 			// 3. sql
-			psmt = conn.prepareStatement("select no, name from user where email = ? and password = ?;");
+			psmt = conn.prepareStatement("elect no, name from user where email = ? and password = ?;");
 
 			// 4. binding
 			psmt.setString(1, email);
@@ -119,7 +120,7 @@ public class UserRepository {
 				result.setNo(no);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new UserRepositoryException(e.toString());
 		} finally {
 
 			try {
