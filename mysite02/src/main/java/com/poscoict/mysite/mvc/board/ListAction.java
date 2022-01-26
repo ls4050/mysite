@@ -1,14 +1,11 @@
 package com.poscoict.mysite.mvc.board;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.poscoict.mysite.dao.BoardDao;
 import com.poscoict.mysite.vo.BoardVo;
@@ -46,7 +43,6 @@ public class ListAction implements Action {
 		Integer totalPages = totalRows % splitNum == 0 ? totalRows / splitNum : (totalRows / splitNum) + 1; // 총 페이지 수
 		Integer startPage = 1 + (cPageBlock - 1) * pageLength;
 		Integer endPage = startPage + pageLength - 1;
-		HttpSession session = request.getSession();
 
 		if (totalPages == 0) {
 			totalPages = 1;
