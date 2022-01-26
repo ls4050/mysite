@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poscoict.mysite.security.Auth;
+import com.poscoict.mysite.security.AuthUser;
 import com.poscoict.mysite.service.BoardService;
 import com.poscoict.mysite.vo.BoardVo;
+import com.poscoict.mysite.vo.UserVo;
 
 @Controller
 @RequestMapping("/board")
@@ -37,8 +39,9 @@ public class BoardController {
 
 	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(BoardVo vo) {
-		boardService.addContents(vo);
+	public String write(@AuthUser UserVo authUser, BoardVo boardVo) {
+		boardVo.setUserNo(authUser.getNo());
+		boardService.addContents(boardVo);
 		return "redirect:/board";
 	}
 
