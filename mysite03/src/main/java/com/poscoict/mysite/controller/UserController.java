@@ -1,6 +1,5 @@
 package com.poscoict.mysite.controller;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.poscoict.mysite.security.Auth;
+import com.poscoict.mysite.security.AuthUser;
 import com.poscoict.mysite.service.UserService;
 import com.poscoict.mysite.vo.UserVo;
 
@@ -39,24 +40,9 @@ public class UserController {
 		return "user/login";
 	}
 	
-	@RequestMapping(value="/logout", method=RequestMethod.GET)
-	public String logout(HttpSession session) {
-		session.removeAttribute("authUser");
-		session.invalidate(); //jsessionID를 새로 바꿔줌 = 삭제 
-		return "redirect:/";
-	}
-	
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(
-			HttpSession session,
-			Model model) {
-		//Access Controller
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser==null) {
-			return "redirect:/";
-		}
-		
-		
+	public String update(@AuthUser UserVo authUser, Model model) {
 		Long userNo = authUser.getNo();
 		UserVo userVo = userService.getUser(userNo);
 		model.addAttribute("userVo", userVo);
@@ -64,14 +50,9 @@ public class UserController {
 		return "user/update";
 	}
 	
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, UserVo userVo) {
-		//Access Controller
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		if(authUser==null) {
-			return "redirect:/";
-		}
-		
+	public String update(@AuthUser UserVo authUser, UserVo userVo) {
 		userVo.setNo(authUser.getNo());
 		userService.updateUser(userVo);
 		
