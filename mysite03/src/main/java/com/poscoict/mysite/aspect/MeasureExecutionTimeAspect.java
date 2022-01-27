@@ -11,7 +11,8 @@ import org.springframework.util.StopWatch;
 public class MeasureExecutionTimeAspect {
 	
 	//*..* com..mysite
-	@Around("execution(* *..*.repository.*.*(..))")
+	// controller에서는 repo + service 시간이 더해져서 나온다 
+	@Around("execution(* *..*.repository.*.*(..)) || execution(* *..*.service.*.*(..)) || execution(* *..*.controller.*.*(..))")
 	public Object aroundAdvice(ProceedingJoinPoint pjp) throws Throwable{
 		//before
 		StopWatch sw = new StopWatch();
