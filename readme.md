@@ -47,8 +47,9 @@
 
 ### 외부 IP 접속
 1.	Linux static IP 수정
-2.	applicationContext.xml connection pool IP 수정 
-3.	Jenkins build
+2.	mariadb 접속 후, 새로운 사용자@ip 생성 및 권한 부여
+3.	applicationContext.xml connection pool IP 수정
+4.	Jenkins build
 
 ### exception controll
 ![error drawio](https://user-images.githubusercontent.com/66767038/152187615-5ab78bcf-a82f-45a0-9490-b784d94c3de5.png)
