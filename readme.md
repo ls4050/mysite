@@ -15,7 +15,7 @@
 	<!-- update -->
 	BOOTPROTO="static"
 	<!-- add -->
-	IPV6_ADDR=192.168.0.197
+	IPADDR=192.168.0.197
 	NETMASK=255.255.255.0
 	GATEWAY=192.168.0.1
 	DNS=168.126.63.1
