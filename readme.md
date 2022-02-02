@@ -27,13 +27,22 @@
 3.	DNS 확인
    
    nslookup www.google.com
-   server=dns
+   
+	server=xxx.xxx.xxx -> DNS
+   
+4.	mysql forward engineering
 
-### exception controll
-![error drawio](https://user-images.githubusercontent.com/66767038/152187615-5ab78bcf-a82f-45a0-9490-b784d94c3de5.png)
-
+   인코딩 수정
+  
+	SET utf8 COLLATE utf8_general_ci;
 ### 외부 IP 접속
 1.	Linux static IP 수정
 2.	applicationContext.xml connection pool IP 수정 
 3.	Jenkins build
+
+### exception controll
+![error drawio](https://user-images.githubusercontent.com/66767038/152187615-5ab78bcf-a82f-45a0-9490-b784d94c3de5.png)
+
+### Jenkins
+![jenkins drawio](https://user-images.githubusercontent.com/66767038/152201248-10f56ced-7dae-448f-980b-6ed129ec5048.png)
 
