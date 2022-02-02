@@ -20,6 +20,15 @@
 	GATEWAY=192.168.0.1
 	DNS=168.126.63.1
 	
+2.	gateway 확인
+
+   route
+
+3.	DNS 확인
+   
+   nslookup www.google.com
+   server=dns
+
 ### exception controll
 ![error drawio](https://user-images.githubusercontent.com/66767038/152187615-5ab78bcf-a82f-45a0-9490-b784d94c3de5.png)
 

@@ -10,7 +10,7 @@
 	
 	<select id="findByEmailAndPassword" parameterType="map" resultType="uservo">
 		<![CDATA[
-			elect no, name from user where email = #{e} and password = #{p}
+			select no, name from user where email = #{e} and password = #{p}
 		]]>
 	</select>
 	
