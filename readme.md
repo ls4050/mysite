@@ -35,6 +35,16 @@
    인코딩 수정
   
 	SET utf8 COLLATE utf8_general_ci;
+	
+5.	mariaDB 사용자생성, 사용자삭제, 권한조회, 권한부여
+
+	사용자 생성 : create user '[id]'@'[ip]' identified '[비밀번호]';
+	사용자 삭제 : drop user '[id]'@'[ip]';
+	권한 조회 : show grants for '[id]'@'[ip]';
+	권한 부여 : grant all privileges on [db명].* to '[id]'@'ip';
+	권한 갱신 : flush privileges;
+
+
 ### 외부 IP 접속
 1.	Linux static IP 수정
 2.	applicationContext.xml connection pool IP 수정 
