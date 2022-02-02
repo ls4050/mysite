@@ -21,4 +21,10 @@
 	DNS=168.126.63.1
 	
 ### exception controll
-![error](https://user-images.githubusercontent.com/66767038/152172565-fcf587be-972c-462c-a7b6-c93c82233b5a.png)
+![error drawio](https://user-images.githubusercontent.com/66767038/152187615-5ab78bcf-a82f-45a0-9490-b784d94c3de5.png)
+
+### 외부 IP 접속
+1.	Linux static IP 수정
+2.	applicationContext.xml connection pool IP 수정 
+3.	Jenkins build
+
