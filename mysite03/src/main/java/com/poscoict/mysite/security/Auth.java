@@ -15,6 +15,6 @@ public @interface Auth {
 	
 	//annotaion에 값이 안들어가있어도 디폴트로 설정한다.
 	public String role() default "USER";
-	
 //	public boolean test() default false;
 }
+
