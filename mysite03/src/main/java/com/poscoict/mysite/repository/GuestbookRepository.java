@@ -20,14 +20,18 @@ public class GuestbookRepository {
 		return sqlSession.selectList("guestbook.findAll");
 	}
 
-	public boolean insert(GuestbookVo vo) {
+	public Boolean insert(GuestbookVo vo) {
 		return 1 == sqlSession.insert("guestbook.insert", vo);
 	}
 	
-	public boolean delete(Long no, String password) {
+	public Boolean delete(Long no, String password) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("no", no);
 		map.put("password", password);
 		return 1 == sqlSession.delete("guestbook.delete", map);
+	}
+
+	public Boolean deleteByAdmin(Long no) {
+		return 1 == sqlSession.delete("guestbook.deleteByAdmin", no);
 	}
 }

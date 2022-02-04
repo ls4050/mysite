@@ -24,4 +24,10 @@
 	delete from guestbook where no=#{no} and password=#{password}
 	]]>
  </delete>
+ 
+ <delete id="deleteByAdmin" parameterType="long">
+	<![CDATA[
+	delete from guestbook where no=#{no}
+	]]>
+ </delete>
 </mapper>

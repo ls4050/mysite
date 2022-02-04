@@ -2,6 +2,7 @@ package com.poscoict.mysite.service;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +15,20 @@ public class GuestbookService {
 	@Autowired
 	private GuestbookRepository guestbookRepository;
 	
+	
 	public List<GuestbookVo> getMessageList() {
 	 	return guestbookRepository.findAll();
 	}
 	
 	public Boolean deleteMessage(Long no, String password) {
-		guestbookRepository.delete(no, password);
-		return false;
+		return guestbookRepository.delete(no, password);
 	}
 	
 	public Boolean addMessage(GuestbookVo vo) {
 		return guestbookRepository.insert(vo);
+	}
+
+	public Boolean deleteMessageByAdmin(Long no) {
+		return guestbookRepository.deleteByAdmin(no);
 	}
 }

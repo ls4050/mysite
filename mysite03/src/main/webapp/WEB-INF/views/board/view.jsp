@@ -37,7 +37,7 @@ pageContext.setAttribute("newline", "\n");
 				</table>
 				<div class="bottom">
 					<a href="${pageContext.request.contextPath }/board?page=${page}&keyword=${keyword}">글목록</a>
-					<c:if test="${authUser.no==vo.userNo&&not empty authUser }">
+					<c:if test="${(authUser.no==vo.userNo&&not empty authUser)||authUser.role eq 'ADMIN' }">
 						<a
 							href="${pageContext.request.contextPath }/board/update/${vo.no}">글수정</a>
 					</c:if>

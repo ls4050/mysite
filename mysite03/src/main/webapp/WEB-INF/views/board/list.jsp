@@ -49,7 +49,7 @@
 							<td>${vo.getUserName() }</td>
 							<td>${vo.hit }</td>
 							<td>${vo.getRegDate() }</td>
-							<c:if test="${authUser.no==vo.userNo&& not empty authUser}">
+							<c:if test="${(authUser.no==vo.userNo&&not empty authUser)||authUser.role eq 'ADMIN' }">
 								<td><a
 									href="${pageContext.servletContext.contextPath }/board/delete/${vo.no}"
 									class="del"
