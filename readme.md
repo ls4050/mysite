@@ -39,7 +39,7 @@
 	
 5.	mariaDB 사용자생성, 사용자삭제, 권한조회, 권한부여
 
-	사용자 생성 : create user '[id]'@'[ip]' identified '[비밀번호]';
+	사용자 생성 : create user '[id]'@'[ip]' identified by '[비밀번호]';
 	
 	사용자 삭제 : drop user '[id]'@'[ip]';
 	
