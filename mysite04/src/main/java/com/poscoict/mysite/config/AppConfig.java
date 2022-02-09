@@ -1,4 +1,4 @@
-package com.poscoict.mysite.config.app;
+package com.poscoict.mysite.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
