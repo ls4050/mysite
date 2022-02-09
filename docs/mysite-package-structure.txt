@@ -41,5 +41,5 @@ Mysite04, 05 Package Structure
            |	  |		|		|	    |     |--- web
            |	  |		|		|	    |     |     |--- messages
            |	  |		|		|	    |     |     |    |--- messages_ko.properties
-                 
+           |	  |		|		|	    |     |     |    |--- messages_ko.properties                 
 <pre>
