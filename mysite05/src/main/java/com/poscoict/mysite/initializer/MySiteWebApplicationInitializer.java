@@ -37,10 +37,10 @@ public class MySiteWebApplicationInitializer extends AbstractAnnotationConfigDis
 	}
 
 	// 디폴트서블릿 핸들러때문에 절대 안된다
-//	@Override
-//	protected void customizeRegistration(Dynamic registration) {
-//		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
-//	}
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
+	}
 	
 	
 

@@ -29,9 +29,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 	// Message Converter
 	
 	// DefaultServlet Handler
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable(); // default 서블릿 핸들러를 사용가능하게 하겠다.
-	}
-	
+//	@Override
+//	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+//		configurer.enable(); // default 서블릿 핸들러를 사용가능하게 하겠다.
+//	}
+//	
 }

@@ -33,8 +33,5 @@ public class FileuploadConfig extends WebMvcConfigurerAdapter {
 			.addResourceHandler(env.getProperty("fileupload.resourceMapping"))
 			.addResourceLocations("file:"+env.getProperty("fileupload.uploadLocation"));
 	}
-	// dispatcher servlet
-	// assets를 resources 로 옮겨두고
-	// file -> classpath: aseets 로 적어라
 	
 }
