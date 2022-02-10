@@ -5,65 +5,14 @@
 	version="2.5">
 	<display-name>mysite05</display-name>
 	
-	<context-param>
-		<param-name>contextClass</param-name>
-		<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-		</param-value>
-	</context-param>
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>com.poscoict.mysite.config.AppConfig</param-value>
-	</context-param>
 
-	<!-- Context Load Listener -->
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener
-		</listener-class>
-	</listener>
+	
 
-	<!-- Encoding Filter -->
-	<filter>
-		<filter-name>encodingFilter</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
-		</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>UTF-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>encodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
 
-	<!-- Dispatcher Servlet -->
-	<servlet>
-		<servlet-name>spring</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet
-		</servlet-class>
-		<init-param>
-			<param-name>contextClass</param-name>
-			<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext
-			</param-value>
-		</init-param>
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>com.poscoict.mysite.config.WebConfig</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>spring</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
-
-	<!-- 공통 에러페이지 -->
+	<!-- 공통 에러페이지: 과제 이 설정 없애기(web.xml 진짜 사라지게 하기) -->
 	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/error/404.jsp</location>
 	</error-page>
 
-	<error-page>
-		<error-code>500</error-code>
-		<location>/WEB-INF/views/error/500.jsp</location>
-	</error-page>
 </web-app>
