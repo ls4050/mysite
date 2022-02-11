@@ -10,6 +10,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.poscoict.mysite.service.UserService;
 import com.poscoict.mysite.vo.UserVo;
 
+@SuppressWarnings("deprecation")
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 	
 	@Autowired

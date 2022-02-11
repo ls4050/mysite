@@ -10,6 +10,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.poscoict.mysite.service.SiteService;
 import com.poscoict.mysite.vo.SiteVo;
 
+@SuppressWarnings("deprecation")
 public class SiteInterceptor extends HandlerInterceptorAdapter {
 	
 	@Autowired
