@@ -33,6 +33,9 @@ public class GalleryService {
 	public Boolean saveImage(MultipartFile multipartFile, String comments) {
 		GalleryVo galleryVo = new GalleryVo();
 		String url = fileUploadService.restore(multipartFile);
+		if(url == null) {
+			return false;
+		}
 		galleryVo.setComments(comments);
 		galleryVo.setUrl(url);
 		return galleryRepository.insert(galleryVo);

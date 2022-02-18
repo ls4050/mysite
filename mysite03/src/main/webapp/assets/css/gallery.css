@@ -6,15 +6,33 @@
 #gallery ul				{ width: 100%; margin: 10px 0px 50px 22px; }
 #gallery ul li			{ float: left; position: relative; overflow-y: hidden; }
 #gallery ul li a.image	{
-display: block;
-width:114px;
-height:114px;
-background-size: 114px;
-background-repeat: no-repeat;
-background-position: center center;
-margin: 4px;
-border: 2px solid #fff;
-outline: 2px solid #bbb;
+	display: block;
+	width:114px;
+	height:114px;
+	background-size: 114px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin: 4px;
+	border: 2px solid #fff;
+	outline: 2px solid #bbb;
+}
+
+#gallery ul li a.del-button	{
+	display:none;
+	position:absolute;
+	right:2px;
+	top:3px;
+	font-size: 0;
+	width: 24px;
+	height: 24px;
+	background:url('../images/delete-imge.png');
+	background-size: 15px;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+#gallery ul li:hover a.del-button {
+	display: block;
 }
 
 
@@ -45,6 +63,17 @@ outline: 2px solid #bbb;
 	display: block;
 	position: relative;
 	float: right;
+	width: 125px;
+    height: 35px;
+    background: #eeedee;
+    text-align: center;
+    border-radius: 2px;
+    color: black;
+    font-weight: bold;
+    border: 1px solid #fff;
+    outline: 1px solid #2F88D2;
+    line-height: 34px;
+    text-decoration: none;
 }
 
 /* 이미지 업로드 팝업 레이어 */ 
