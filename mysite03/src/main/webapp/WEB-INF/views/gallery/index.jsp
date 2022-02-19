@@ -64,13 +64,14 @@ $(function(){
 							   data-title="${vo.comments}"
 							   class="image"
 							   style="background-image:url('${pageContext.request.contextPath }${vo.url}')"></a>
-									
+							<c:if test="${authUser.role == 'ADMIN' }">
 							<a href="${pageContext.request.contextPath }/gallery/delete/${vo.no}"
 							   class="del-button"
 							   title="삭제">삭제</a>
+							</c:if>
 						</li>
 					</c:forEach>
-				</ul>	
+				</ul>
 			</div>
 
 			<div id="dialog-upload-form" title="이미지 업로드" style="display:none">
