@@ -1,0 +1,87 @@
+@charset "UTF-8";
+@import "mysite.css";
+
+
+#gallery				{ margin:20px auto;	width:540px;}
+#gallery ul				{ width: 100%; margin: 10px 0px 50px 22px; }
+#gallery ul li			{ float: left; position: relative; overflow-y: hidden; }
+#gallery ul li a.image	{
+	display: block;
+	width:114px;
+	height:114px;
+	background-size: 114px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	margin: 4px;
+	border: 2px solid #fff;
+	outline: 2px solid #bbb;
+}
+
+#gallery ul li a.del-button	{
+	display:none;
+	position:absolute;
+	right:2px;
+	top:3px;
+	font-size: 0;
+	width: 24px;
+	height: 24px;
+	background:url('../images/delete-imge.png');
+	background-size: 15px;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+#gallery ul li:hover a.del-button {
+	display: block;
+}
+
+
+/* 갤러리의 top부분 영역 */
+#gallery #top {
+	padding: 0px;
+	height: 50px;
+	position: relative;
+}
+
+/* logo */
+#gallery #top img {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 50px;
+	height: 50px;
+}
+/* 갤러리 제목 */
+#gallery #top h1 {
+	float: left;
+	position: relative;
+	left: 60px;
+	margin-top: 10px;
+}
+
+#gallery #top #upload-image {
+	display: block;
+	position: relative;
+	float: right;
+	width: 125px;
+    height: 35px;
+    background: #eeedee;
+    text-align: center;
+    border-radius: 2px;
+    color: black;
+    font-weight: bold;
+    border: 1px solid #fff;
+    outline: 1px solid #2F88D2;
+    line-height: 34px;
+    text-decoration: none;
+}
+
+/* 이미지 업로드 팝업 레이어 */ 
+#dialog-upload-form 					{ text-align: left; }
+#dialog-upload-form p					{ padding:20px 0 5px 0; font-weight: bold; font-size:1.1em }
+#dialog-upload-form label, 
+#dialog-upload-form input				{ display:block; }
+#dialog-upload-form label				{ font-weight:bold; margin-top:10px; }
+#dialog-upload-form input				{ outline:none; margin-top:5px; }
+#dialog-upload-form input[type='text']	{ padding: 5px; border:2px solid #A9A9A9; width:260px; }
+

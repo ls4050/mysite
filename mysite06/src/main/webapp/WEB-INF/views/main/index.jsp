@@ -20,7 +20,7 @@
 					<img id="profile"
 						src="${pageContext.request.contextPath }/${site.profile}"
 						style='width: 200px;'>
-					<h2>${site.welcome }</h2>
+					<h2>${siteVo.welcome }</h2>
 					<p>
 						${fn:replace(site.description, newline, "<br/>")}<br> <br> <a
 							href="${pageContext.request.contextPath }/guestbook">방명록</a>에 글 남기기<br>
@@ -28,7 +28,9 @@
 				</div>
 			</div>
 		</div>
-		<c:import url="/WEB-INF/views/includes/navigation.jsp"/>
+		<c:import url="/WEB-INF/views/includes/navigation.jsp">
+			<c:param name="menu" value="main"/>
+		</c:import>
 		<c:import url="/WEB-INF/views/includes/footer.jsp"/>
 	</div>
 </body>
