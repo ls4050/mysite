@@ -18,28 +18,51 @@ $(function(){
 	$("#join-form").submit(function(event){
 		event.preventDefault();
 		
-		// 이름 유효성(empty) 체크 
+		// 1. 이름 유효성(empty) 체크 
 		if($("#name").val() === ''){
 			alert("이름이 비어 있습니다.");
 			$("#name").focus();
 			return;
-		};
+		}
 		
-		// 이메일 유효성(empty) 체크
+		// 2. 이메일 유효성(empty) 체크
+		if($("#email").val() === ''){
+			alert("이메일이 비어 있습니다.");
+			$("#email").focus();
+			return;
+		}
 		
-		// 중복체크 유무 
+		// 3. 중복체크 유무 
 		// 이미지 상태가 하이드인지 쇼 상태인지 
+		if($("#img-checkemail").css("display") === "none"){
+			alert("중복체크를 해주세요.");
+			$("#email").focus();
+			return;
+		}
 		
-		// 비밀번호 유효성(empty) 체크 
+		// 4. 비밀번호 유효성(empty) 체크 
+		if($("#password").val() === ''){
+			alert("비밀번호가 비어 있습니다.");
+			$("#password").focus();
+			return;
+		}
 		
-		// 유효성 ok
+		// 5. gender 유효성(empty) 체크 
+		if ($('input[name=gender]:checked').length == 0) {
+			alert("성별을 선택해주세요.");
+			return;
+		}
+		
+		
+		// 6. 유효성 ok
 		console.log("ok!!!!!!!");
-		// $("#join-form")[0].submit();
+		$("#join-form")[0].submit();
 	});
 	
 	$("#email").change(function(){
 		$("#img-checkemail").hide();
 		$("#btn-checkemail").show();
+		$("#emailmessage").hide();
 	});
 	
 	$("#btn-checkemail").click(function(){
@@ -54,7 +77,7 @@ $(function(){
 			success:function(response){
 				if(response.result !== 'success'){
 					console.error(response.message);
-					return
+					return;
 				}
 				
 				if(response.data) {
@@ -74,9 +97,9 @@ $(function(){
 			error:function(xhr, status, e){
 				console.error(status, e);
 			}
-		})
-	})
-})
+		});
+	});
+});
 </script>
 </head>
 <body>
@@ -103,7 +126,7 @@ $(function(){
 					<input type="button" id="btn-checkemail" value="중복체크">
 					<img id="img-checkemail" src="${pageContext.request.contextPath }/assets/images/check.png" style="width:16px; display:none"/>
 					<p style="text-align:left; padding-left:0; color:#f00">
-						<form:errors path="email"/>
+						<form:errors path="email" id="emailmessage"/>
 					</p>
 										
 					<label class="block-label">패스워드</label>
