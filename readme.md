@@ -48,7 +48,8 @@
 	권한 부여 : grant all privileges on [db명].* to '[id]'@'ip';
 	
 	권한 갱신 : flush privileges;
-
+	
+	사용자 전체조회 : select host, user, password from mysql.user;
 
 ### 외부 IP 접속
 1.	Linux static IP 수정
