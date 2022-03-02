@@ -19,6 +19,21 @@
   ]]>
  </select>
  
+ <select id="findAllByNo" parameterType="long" resultType="guestbookvo">
+	<choose>
+		<when test="value == 0">
+			<![CDATA[
+			select no, name, message, date_format(reg_date,'%Y-%m-%d') from guestbook order by no desc limit 0, 5;
+			]]>
+		</when>
+		<otherwise>
+			<![CDATA[
+			select no, name, message, date_format(reg_date,'%Y-%m-%d') from guestbook where no < #{value} order by no desc limit 0, 3;
+			]]>
+		</otherwise>
+	</choose>
+ </select>
+ 
  <delete id="delete" parameterType="map">
 	<![CDATA[
 	delete from guestbook where no=#{no} and password=#{password}

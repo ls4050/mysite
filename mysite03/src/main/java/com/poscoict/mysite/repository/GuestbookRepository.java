@@ -19,6 +19,10 @@ public class GuestbookRepository {
 	public List<GuestbookVo> findAll() {
 		return sqlSession.selectList("guestbook.findAll");
 	}
+	
+	public List<GuestbookVo> findAllByNo(Long no) {
+		return sqlSession.selectList("guestbook.findAllByNo", no);
+	}
 
 	public Boolean insert(GuestbookVo vo) {
 		return 1 == sqlSession.insert("guestbook.insert", vo);
