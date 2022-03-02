@@ -80,6 +80,7 @@ $(function(){
 	$("#btn-checkemail").click(function(){
 		var email = $("#email").val();
 		if(email == ''){
+			$("#email").focus();
 			return ;
 		}
 		$.ajax({
