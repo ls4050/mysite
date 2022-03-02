@@ -39,13 +39,18 @@ public class GlobalExceptionHandler {
 		
 		if(accept.matches(".*application/json.*")) {
 			//3. JSON 요청
+			// jsonresult 객체 반환
 			JsonResult result = JsonResult.fail(errors.toString());
+			// ObjectMapper().writeValueAsString : java object -> json -> string
 			String jsonString = new ObjectMapper().writeValueAsString(result);
+			
 			
 			response.setContentType("application/json; charset=UTF-8");
 			
 			// write 대신에 byte단위로 씀 -> 좀더 빨리 데이터 불러온다 
 			OutputStream os = response.getOutputStream();
+			
+			// jsonString을 어디에 써주나 ?
 			os.write(jsonString.getBytes("utf-8"));
 			os.close();
 		} else {
