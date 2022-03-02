@@ -33,7 +33,6 @@ var fetch = function(){
 				var html = render(vo);
 				$("#list-guestbook").append(html);
 				startNo = response.data[response.data.length-1].no;
-				console.log(startNo);
 			}
 		}
 	});
@@ -107,6 +106,10 @@ $(function(){
 				
 				var html = render(response.data);
 				$("#list-guestbook").prepend(html);
+				$("#input-name").val("");
+				$("#input-password").val("");
+				$("#tx-content").val("");
+				$("#input-name").focus();
 			}
 		});
 	});
@@ -160,7 +163,6 @@ $(function(){
 	$(document).on('click', "#list-guestbook li a", function(event){
 		event.preventDefault();
 		var no = $(this).data("no")
-		console.log(no);
 		$("#hidden-no").val(no);
 		dialogDelete.dialog('open');
 	})
@@ -175,7 +177,6 @@ $(function(){
 		var scrollTop = $window.scrollTop();
 		
 		if(scrollTop + windowHeight + 10 > documentHeight){
-			console.log("fetch() call");
 			fetch();
 		}
 	});	
